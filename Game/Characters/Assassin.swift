@@ -8,6 +8,7 @@
 import Foundation
 
 class Assassin: Character {
+
     override init(name: String) {
         super.init(name: name)
         self.healthPoints = 75

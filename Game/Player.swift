@@ -8,7 +8,7 @@
 import Foundation
 
 class Player {
-    var characters = [Character]()
+    private var characters = [Character]()
 
     convenience init() {
         self.init(numberOfCharacter: 3)

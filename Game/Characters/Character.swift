@@ -19,13 +19,11 @@ class Character {
     }
 
     static public func checkName(_ name: String?) -> Bool {
-        if let charName = name, !charName.isEmpty {
-            if names.contains(charName.lowercased()) {
-                print("Name already used")
-                return true
-            }
+        guard let charName = name, !charName.isEmpty, !names.contains(charName.lowercased()) else {
+            return false
         }
-        return false
+        print("Name already used")
+        return true
     }
 
     // Add a new name to the list

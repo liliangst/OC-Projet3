@@ -10,12 +10,10 @@ import Foundation
 class Utilities {
 
     static func readInteger() -> Int? {
-        if let val = readLine() {
-            if let num = Int(val) {
-                return num
-            }
+        guard let val = readLine(), let num = Int(val) else {
+            return nil
         }
-        return nil
+        return num
     }
 
     static func printSpace(_ nbLines: Int) {
