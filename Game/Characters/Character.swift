@@ -8,37 +8,24 @@
 import Foundation
 
 class Character {
-    static private var names = [String]()
+
     var name: String
     var healthPoints = 0
-    var weapon = 0
+    var weapon = Weapon(type: .sword)
     var maxHP = 0
 
     init(name: String) {
         self.name = name
     }
 
-    static public func checkName(_ name: String?) -> Bool {
-        guard let charName = name, !charName.isEmpty, !names.contains(charName.lowercased()) else {
-            return false
-        }
-        print("Name already used")
-        return true
-    }
-
-    // Add a new name to the list
-    static public func addName(_ name: String) {
-        names.append(name.lowercased())
-    }
-
     // Attack another character
     public func attack(_ target: Character) {
         if target.isAlive() {
-            target.healthPoints -= self.weapon
+            target.healthPoints -= self.weapon.damages
         }
         print("\(self.name) hits \(target.name) with success !\n")
         if !target.isAlive() {
-            print("\(target) is dead !")
+            print("\(target.name) is dead !")
         }
     }
 

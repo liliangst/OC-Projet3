@@ -42,10 +42,7 @@ class Game {
             print("\(currentPlayerIndex == 0 ? "First" : "Second") player's turn\n")
             nbTurn += 1
 
-            if players[currentPlayerIndex].teamIsAlive() {
-                guard let char = players[currentPlayerIndex].pickCharacter() else {
-                    return
-                }
+            if let char = players[currentPlayerIndex].pickCharacter() {
 
                 print("""
                 \nChoose an action :
@@ -53,34 +50,33 @@ class Game {
                 \(char is Wizard ? "2: Heal\n" : "\n")
                 """)
 
-                guard let rawAction = Utilities.readInteger() else {
+                if let rawAction = Utilities.readInteger() {
+
+                    switch Action(rawValue: rawAction) {
+                    case .attack:
+                        print("Target : ")
+                        if let charToAttack = players[(currentPlayerIndex+1)%2].pickCharacter() {
+                            char.attack(charToAttack)
+                            damages += char.weapon.damages
+                            break
+                        }
+                    case .heal:
+                        print("Target : ")
+                        if let wizard = char as? Wizard, let charToHeal = players[currentPlayerIndex].pickCharacter() {
+                            wizard.heal(charToHeal)
+                            healedNb += 1
+                        } else {
+                            print("\(char.name) tries to cast a spell and fail !\n")
+                        }
+                    case .none:
+                        print("This action does not exist you lost your turn !\n")
+                    }
+                } else {
                     print("This action does not exist you lost your turn !\n")
-                    return
                 }
 
-                switch Action(rawValue: rawAction) {
-                case .attack:
-                    print("Target : ")
-                    if let charToAttack = players[(currentPlayerIndex+1)%2].pickCharacter() {
-                        char.attack(charToAttack)
-                        damages += char.weapon
-                        break
-                    }
-                case .heal:
-                    print("Target : ")
-                    guard let wizard = char as? Wizard else {
-                        print("\(char.name) tries to cast a spell and fail !\n")
-                        return
-                    }
-                    if let charToHeal = players[currentPlayerIndex].pickCharacter() {
-                        wizard.heal(charToHeal)
-                        healedNb += 1
-                    }
-                case .none:
-                    print("This action does not exist you lost your turn !\n")
-                }
+                currentPlayerIndex = currentPlayerIndex == 0 ? 1 : 0
             }
-            currentPlayerIndex = currentPlayerIndex == 0 ? 1 : 0
         }
     }
 
