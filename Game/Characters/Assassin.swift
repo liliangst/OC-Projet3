@@ -13,6 +13,6 @@ class Assassin: Character {
         super.init(name: name)
         self.healthPoints = 75
         self.maxHP = 75
-        self.weapon = 15
+        self.weapon = Weapon(type: .dagger)
     }
 }

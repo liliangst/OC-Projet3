@@ -13,6 +13,6 @@ class Warrior: Character {
         super.init(name: name)
         self.healthPoints = 100
         self.maxHP = 100
-        self.weapon = 10
+        self.weapon = Weapon(type: .sword)
     }
 }

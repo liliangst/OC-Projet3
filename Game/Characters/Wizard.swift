@@ -13,13 +13,15 @@ class Wizard: Character {
         super.init(name: name)
         self.healthPoints = 120
         self.maxHP = 120
-        self.weapon = 5
+        self.weapon = Weapon(type: .wand)
     }
 
     public func heal(_ target: Character) {
         if target.isAlive() && target.healthPoints < target.maxHP - 10 {
             target.healthPoints += 10
+            print("\(self.name) just healed \(target.name) !\n")
+        } else {
+            print("Nothing happened.\n")
         }
-        print("\(self.name) just healed \(target.name) !\n")
     }
 }

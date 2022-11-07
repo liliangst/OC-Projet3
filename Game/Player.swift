@@ -35,10 +35,10 @@ class Player {
             repeat {
                 print("\nChoose a name :")
                 charName = readLine()
-            } while Character.checkName(charName)
+            } while NameChecker.isNameUsed(charName)
 
             // charName is now safe to unwrap
-            Character.addName(charName!)
+            NameChecker.addName(charName!)
 
             switch CharacterType(rawValue: charType) {
             case .warrior:
@@ -58,16 +58,23 @@ class Player {
     // Display each character with its attributes
     public func displayTeam() {
         for character in characters {
-            print("\(character.name), \(type(of: character)), \(character.weapon) ATT, \(character.healthPoints) HP\n")
+            print("\(character.name),",
+                  "\(type(of: character)), ",
+                  "\(character.weapon.damages) ATT, ",
+                  "\(character.healthPoints) HP\n")
         }
     }
 
     // Check if at least one character is alive
     public func teamIsAlive() -> Bool {
-        for character in characters where character.healthPoints >= 0 {
-                return true
-        }
-        return false
+        characters.filter({ $0.isAlive()}).count > 0
+
+        /* Old version
+         for character in characters where character.healthPoints >= 0 {
+                 return true
+         }
+         return false
+         */
     }
 
     // Pick a character
@@ -77,11 +84,12 @@ class Player {
             let char = characters[index]
             print("\(char.isAlive() ? String(index+1) : "X"):",
                   "\(char.name), \(type(of: char)),",
-                  "\(char.weapon) ATT,",
+                  "\(char.weapon.damages) ATT,",
                   "\(char.healthPoints) HP\n")
         }
 
         guard let charChoice = Utilities.readInteger(), charChoice <= characters.count else {
+            print("This is not a character.\n")
             return nil
         }
 
