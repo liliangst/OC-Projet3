@@ -14,7 +14,7 @@ class NameChecker {
     // Check is the name is already asign to a character
     static public func isNameUsed(_ name: String?) -> Bool {
         guard let charName = name, !charName.isEmpty, !names.contains(charName.lowercased()) else {
-            print("Name already used")
+            print("Name already used or empty")
             return true
         }
 
