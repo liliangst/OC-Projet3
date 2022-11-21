@@ -58,7 +58,6 @@ class Game {
                         if let charToAttack = players[(currentPlayerIndex+1)%2].pickCharacter() {
                             char.attack(charToAttack)
                             damages += char.weapon.damages
-                            break
                         }
                     case .heal:
                         print("Target : ")
